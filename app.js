@@ -70,19 +70,13 @@ app.post("/post-test", (req, res) => {
     }),
   )
 });
-app.post("/process-submission", async (req, res) => {
+
+const finishProcessing = async (req, res) => {
   try {
     const userPrompt = req.body.userPrompt || ""
     const model = req.body.model || ""
     const formApp = req.body.formApp
     const formId = req.body.formId
-
-    console.log({
-      userPrompt,
-      model,
-      formApp,
-      formId
-    })
 
     const aiInput = generateAIInput(formApp, userPrompt)
     const completion = await openai.chat.completions.create({
@@ -182,6 +176,14 @@ app.post("/process-submission", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+}
+
+app.post("/process-submission", async (req, res) => {
+  finishProcessing(req)
+  return res.status(200).json({
+    result:
+      "Thank you for submitting the form. \nYour information has been successfully received.",
+  })
 });
 
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
