@@ -51,6 +51,25 @@ const sendEmail = async (
 }
 
 app.get("/", (req, res) => res.type('html').send(html));
+app.post("/post-test", (req, res) => {
+  res.status(200).json({ message: 'Nice' })
+  sendEmail(
+    "",
+    `(via Solute) - New submission received`,
+    getHTML({
+      job: {
+        id: "1",
+        name: "",
+      },
+      candidate: {
+        name: "",
+        email: "",
+        vacancyMatchScore: 2,
+      },
+      aiAnalysisSummary: "aiOutput",
+    }),
+  )
+});
 app.post("/process-submission", async (req, res) => {
   try {
     const userPrompt = req.body.userPrompt || ""
