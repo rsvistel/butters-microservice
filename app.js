@@ -54,7 +54,7 @@ app.get("/", (req, res) => res.type('html').send(html));
 app.post("/post-test", (req, res) => {
   res.status(200).json({ message: 'Nice' })
   sendEmail(
-    "",
+    "romansvistellviv@gmail.com",
     `(via Solute) - New submission received`,
     getHTML({
       job: {
